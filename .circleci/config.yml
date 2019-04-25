@@ -1,0 +1,44 @@
+version: 2.1
+jobs:
+  build:
+    working_directory: ~/app
+    docker:
+      - image: circleci/openjdk:8
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - app-cache-{{ checksum "build.sbt" }}
+            - app-cache-1
+
+      - run:
+          command: sbt compile test:compile exit
+
+      - save_cache:
+          key: app-cache-{{ checksum "build.sbt" }}
+          paths:
+            - target/resolution-cache
+            - target/streams
+            - project/target/resolution-cache
+            - project/target/streams
+            - ~/.ivy2/cache
+            - ~/.sbt
+
+      - save_cache:
+          # Changing this key/incrementing the number at the end is the only way to remove old dependencies and/or generate a more up-to-date cache
+          key: app-cache-1
+          paths:
+            - ~/.ivy2/cache
+            - ~/.sbt
+
+      - run:
+          command: sbt test exit
+
+      - store_test_results:
+          path: target/test-reports
+
+workflows:
+  build:
+    jobs:
+      - build
