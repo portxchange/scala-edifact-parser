@@ -1,4 +1,4 @@
-package models
+package com.portofrotterdam.models
 
 case class MessageIdentification(
   message: String,

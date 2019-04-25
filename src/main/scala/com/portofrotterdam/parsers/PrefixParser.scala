@@ -1,4 +1,4 @@
-package parsers
+package com.portofrotterdam.parsers
 
 import fastparse.{ P, StringIn }
 

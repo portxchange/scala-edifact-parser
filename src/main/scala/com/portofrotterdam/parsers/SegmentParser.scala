@@ -1,9 +1,9 @@
-package parsers
+package com.portofrotterdam.parsers
 
 import fastparse.{ CharIn, P }
 import fastparse.SingleLineWhitespace._
-import models._
-import parsers.TagParser._
+import com.portofrotterdam.models._
+import com.portofrotterdam.parsers.TagParser._
 
 sealed trait SegmentParser extends CommonParser {
   def Delimiter[_ : P]: P[Unit] = Plus

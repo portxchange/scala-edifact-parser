@@ -1,5 +1,6 @@
+package com.portofrotterdam
+
 import fastparse.P
-import parsers.MessageParser
 import scala.util.{ Failure, Success, Try }
 
 object Parser {

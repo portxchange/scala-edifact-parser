@@ -1,8 +1,8 @@
-package parsers
+package com.portofrotterdam.parsers
 
 import fastparse.P
 import fastparse.SingleLineWhitespace._
-import models._
+import com.portofrotterdam.models._
 
 sealed trait TagParser extends CommonParser {
   def Delimiter[_ : P]: P[Unit] = Colon

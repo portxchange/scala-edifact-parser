@@ -1,7 +1,7 @@
-package parsers
+package com.portofrotterdam.parsers
 
 import fastparse._
-import parsers.SegmentParser._
+import com.portofrotterdam.parsers.SegmentParser._
 import org.scalatest.{ Matchers, WordSpec }
 import scala.reflect.{ classTag, ClassTag }
 

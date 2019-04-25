@@ -1,6 +1,6 @@
-package parsers
+package com.portofrotterdam.parsers
 
-import models._
+import com.portofrotterdam.models._
 import SegmentParser._
 import fastparse.P
 import fastparse.MultiLineWhitespace._
