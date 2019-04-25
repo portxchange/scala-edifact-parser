@@ -17,8 +17,6 @@ bintrayReleaseOnPublish := false
 
 licenses += ("MIT", url("https://opensource.org/licenses/MIT"))
 
-publishMavenStyle := false
-
 // Release
 import ReleaseTransformations._
 releaseProcess := Seq[ReleaseStep](
