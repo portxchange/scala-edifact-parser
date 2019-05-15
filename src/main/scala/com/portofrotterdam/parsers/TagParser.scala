@@ -18,7 +18,7 @@ object TagParser extends TagParser {
     ).map(MessageIdentification.tupled)
 
   def DateTimeTag[_ : P]: P[DateTime] =
-    P(Numeric.rep(exactly = 8).!.map(_.toInt) ~
+    P(Numeric.rep(exactly = 6).!.map(_.toInt) ~
       Delimiter ~
       Numeric.rep(exactly = 4).!.map(_.toInt)
     ).map(DateTime.tupled)

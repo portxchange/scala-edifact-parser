@@ -1,8 +1,25 @@
 # Scala EDIFACT parser
 
 
+[![CircleCI](https://circleci.com/gh/RotterdamLogisticsLab/scala-edifact-parser.svg?style=svg)](https://circleci.com/gh/RotterdamLogisticsLab/scala-edifact-parser) [![Download](https://api.bintray.com/packages/port-of-rotterdam/maven/scala-edifact-parser/images/download.svg)](https://bintray.com/port-of-rotterdam/maven/scala-edifact-parser/_latestVersion)
+
 ## Installation
-`libraryDependencies += "com.portofrotterdam" %% "scala-edifact-parser" % "0.0.1"`
+`libraryDependencies += "com.portofrotterdam" %% "scala-edifact-parser" % "0.0.3"`
+
+## Example
+```scala
+import com.portofrotterdam.Parser
+import com.portofrotterdam.models.IFTSAIMessage
+
+object Application {
+
+  def main(args: Array[String]): Unit = {
+    Parser.parse[IFTSAIMessage](args(0))
+    // or simply
+    Parser.parseIFTSAI(args(0))
+  }
+}
+```
 
 
 ## Message Types
@@ -40,6 +57,6 @@ Currently we only support the [IFTSAI](http://www.unece.org/trade/untdid/d12a/tr
 
 
 ## Future Work
-- Implement other segments
+- Implement remaining segments
 - Cross compile Scala 2.13
 - Date formats for Date/Time/Period segment

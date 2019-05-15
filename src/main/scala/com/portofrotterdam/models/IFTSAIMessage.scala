@@ -1,5 +1,8 @@
 package com.portofrotterdam.models
 
+import com.portofrotterdam.parsers.IFTSAIMessageParser
+import fastparse.P
+
 case class IFTSAIMessage(
   interchangeHeader: Option[InterchangeHeader],
   messageHeader: MessageHeader,
@@ -10,6 +13,10 @@ case class IFTSAIMessage(
   segmentGroup6: Option[SegmentGroup6],
   messageTrailer: MessageTrailer
 )
+
+object IFTSAIMessage {
+  implicit val IFTSAIMessage: P[_] => P[IFTSAIMessage] = IFTSAIMessageParser.parser(_)
+}
 
 case class SegmentGroup4(
   transportInformation: TransportInformation,
