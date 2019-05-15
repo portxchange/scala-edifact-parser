@@ -17,7 +17,7 @@ class SegmentParserSpec extends WordSpec with Matchers {
     }
   }
 
-  segmentTest("UNB+UNOA:2+HYUNDAI+PORTOFROTTERDAM+20190101:0100+1'", InterchangeHeaderSegment(_))
+  segmentTest("UNB+UNOA:2+HYUNDAI+PORTOFROTTERDAM+190101:0100+1'", InterchangeHeaderSegment(_))
   segmentTest("UNH+VIFTSAI0000001+IFTSAI:D:99B:UN'", MessageHeaderSegment(_))
   segmentTest("BGM+TS2+VIFTSAI0000001+9'", BeginningOfMessageSegment(_))
   segmentTest("TDT+20+JMDS905W+1++:172+++OWJG2:103::MADISON MAERSK'", TransportInformationSegment(_))
