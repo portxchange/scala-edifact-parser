@@ -72,7 +72,8 @@ object SegmentParser extends SegmentParser with PrefixParser {
   def ReferenceSegment[_ : P]: P[Reference] =
     P(ReferencePrefix ~
       Delimiter ~
-      ReferenceTag
+      ReferenceTag ~
+      EndOfLine
     ).map(Reference.tupled)
 
   def FreeTextSegment[_ : P]: P[FreeText] =
@@ -88,7 +89,8 @@ object SegmentParser extends SegmentParser with PrefixParser {
       Delimiter.? ~
       Alphanumeric.rep(min = 1, max = 3).!.? ~
       Delimiter.? ~
-      Alphanumeric.rep(min = 1, max = 3).!.?
+      Alphanumeric.rep(min = 1, max = 3).!.? ~
+      EndOfLine
     ).map(FreeText.tupled)
 
   def LocationSegment[_ : P]: P[Location] =
