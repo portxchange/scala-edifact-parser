@@ -1,11 +1,12 @@
 version: 2.1
+orbs:
+  # @volatile: use the highest version
+  pronto-orb: portxchange/pronto-orb@volatile
+
 executors:
   scala:
-    working_directory: ~/app
     docker:
       - image: circleci/openjdk:8
-    environment:
-      SBT_OPTS: "-Xms512M -Xmx3072M -Xss4M -XX:MaxMetaspaceSize=1024M"
 jobs:
   build:
     executor: scala
@@ -67,6 +68,7 @@ workflows:
     jobs:
       - build
       - publish_lib_trigger:
+          context: pronto
           type: approval
           filters:
             branches:
@@ -75,5 +77,6 @@ workflows:
           requires:
             - build
       - publish_lib:
+          context: pronto
           requires:
             - publish_lib_trigger
