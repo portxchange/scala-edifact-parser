@@ -1,44 +1,82 @@
 version: 2.1
-jobs:
-  build:
-    working_directory: ~/app
+orbs:
+  # @volatile: use the highest version
+  pronto-orb: portxchange/pronto-orb@volatile
+
+executors:
+  scala:
     docker:
       - image: circleci/openjdk:8
+jobs:
+  build:
+    executor: scala
     steps:
       - checkout
 
       - restore_cache:
           keys:
-            - app-cache-{{ checksum "build.sbt" }}
-            - app-cache-1
+            - cache-{{ checksum "project/plugins.sbt" }}-{{ checksum "build.sbt" }}
+            - cache-v1
 
       - run:
-          command: sbt compile test:compile exit
+          command: sbt +compile +test:compile exit
 
       - save_cache:
-          key: app-cache-{{ checksum "build.sbt" }}
+          key: cache-{{ checksum "project/plugins.sbt" }}-{{ checksum "build.sbt" }}
           paths:
-            - target/resolution-cache
-            - target/streams
-            - project/target/resolution-cache
-            - project/target/streams
-            - ~/.ivy2/cache
             - ~/.sbt
-
+            - ~/.ivy2/cache
+            - ~/.cache
       - save_cache:
           # Changing this key/incrementing the number at the end is the only way to remove old dependencies and/or generate a more up-to-date cache
-          key: app-cache-1
+          key: cache-v1
           paths:
-            - ~/.ivy2/cache
             - ~/.sbt
+            - ~/.ivy2/cache
+            - ~/.cache
 
       - run:
-          command: sbt test exit
+          command: sbt +test exit
+
+      # Re-use compilation output in other jobs
+      - persist_to_workspace:
+          root: "~"
+          paths:
+            - app
+            - .sbt
+            - .ivy2
+            - .cache
+
 
       - store_test_results:
           path: target/test-reports
 
+  publish_lib:
+    executor: scala
+    steps:
+      - attach_workspace:
+          at: "~"
+      - run:
+          command: sbt "publish" exit
+
 workflows:
+  version: 2
   build:
     jobs:
       - build
+  publish:
+    jobs:
+      - build
+      - publish_lib_trigger:
+          context: pronto
+          type: approval
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - build
+      - publish_lib:
+          context: pronto
+          requires:
+            - publish_lib_trigger
