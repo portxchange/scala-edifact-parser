@@ -3,7 +3,7 @@ lazy val `scala-edifact-parser` = project in file(".")
 name := "scala-edifact-parser"
 organization := "com.portofrotterdam"
 
-scalaVersion := "2.12.8"
+scalaVersion := "2.12.13"
 
 libraryDependencies ++= Seq(
   "com.lihaoyi"   %% "fastparse" % "2.1.0",
